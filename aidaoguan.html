@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>档照</title>
+    <style>
+        #app{
+            margin: 0 auto;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+        }
+        .images{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        img{
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 10px;
+            cursor: pointer;
+        }
+        button{
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+       
+       
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>档的片</h1>
+        <input type="text" v-model="name" placeholder="请输入'裆哥不机密'解锁">
+        <p v-if="name === '裆哥不机密'">你已解锁档照！</p>
+        <p v-else>密码错误，请重新输入！</p>
+        <div v-if="name === '裆哥不机密'" class="images">
+            <img :src="currentImage" alt="">
+            <button @click="preImage">上一张</button>
+            <button @click="nextImage">下一张</button>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+        const app = createApp({
+            data(){
+                return {
+                    name:'',
+                    images:[
+                    'https://www-h1258.oss-cn-beijing.aliyuncs.com/f059df4aae0f9737fe182b411a9750e1.jpg',
+                    'https://www-h1258.oss-cn-beijing.aliyuncs.com/9b6e4347c7482ae92224b4fef51276f9.jpg',
+                    'https://www-h1258.oss-cn-beijing.aliyuncs.com/6c2024a7a62a6815f1106e3721dab23e.jpg',
+                    'https://www-h1258.oss-cn-beijing.aliyuncs.com/10f2a627d40505b8a3ca61f77d46135f.jpg',
+                    'https://www-h1258.oss-cn-beijing.aliyuncs.com/a09a8ed9de5c862270f608c089e96d65.jpg',
+                    'https://www-h1258.oss-cn-beijing.aliyuncs.com/9b6e4347c7482ae92224b4fef51276f9.jpg'
+                    ],
+                    Index:0
+            };
+        },
+            computed:{
+                currentImage(){
+                    return this.images[this.Index];
+                }
+            },
+            
+            methods:{
+                preImage(){ 
+               this.Index = (this.Index - 1 + this.images.length) % this.images.length;
+                },
+                nextImage(){ 
+                    this.Index = (this.Index + 1) % this.images.length;
+                }
+            
+            }
+            });   
+        app.mount('#app');
+    </script>
+</body>
+</html>
